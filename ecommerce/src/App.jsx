@@ -1,19 +1,24 @@
-import { HashRouter as Router } from 'react-router-dom'
-import { ChakraProvider, Container } from '@chakra-ui/react'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { ChakraProvider } from '@chakra-ui/react'
 
 import { theme } from './theme'
 import { Navbar } from './components/Navbar'
-import { AnimatedRoutes } from './AnimatedRoutes'
+import { Home } from './pages/Home'
 
 export const App = () => {
   return (
     <ChakraProvider theme={theme}>
+      <Router>
         <div className="App">
-          <Router>
-            <Navbar/>
-            <AnimatedRoutes/>
-          </Router>
+          <Navbar/>
+          <Routes>
+            <Route exact path="/" element={<Home/>}/>
+            <Route exact path="/home" element={<Home/>}/>
+            <Route exact path="/products" element={<Home/>}/>
+            <Route path="/" element={<Home/>}/>
+          </Routes>
         </div>
+      </Router>
     </ChakraProvider>
   )
 }

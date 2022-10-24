@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 import { CgMenuRightAlt, CgClose } from 'react-icons/cg'
-import { MdOutlineShoppingCart } from 'react-icons/md'
+import { CartWidget } from './CartWidget'
 
 export const Navbar = () => {
     const [isNavToggled, setIsNavToggled] = useState(false)
@@ -39,9 +39,7 @@ export const Navbar = () => {
                         </Link>
                     </Flex>
                     <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2}>
-                        <Button variant="unstyled" fontSize={{base: 40, md: 28}}>
-                            <MdOutlineShoppingCart/>
-                        </Button>
+                        <CartWidget/>
                     </Flex>
                 </Flex>
             </Container>

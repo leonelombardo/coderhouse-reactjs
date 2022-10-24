@@ -20,7 +20,7 @@ export const Home = () => {
 
     return (
         <Wrapper as={motion.div} {...pageVariants}>
-            <ItemListContainer greeting="Welcome to FL!P!"/>
+            <ItemListContainer greeting="Welcome"/>
         </Wrapper>
     )
 }
