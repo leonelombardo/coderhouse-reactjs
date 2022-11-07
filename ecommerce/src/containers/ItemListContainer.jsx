@@ -42,7 +42,7 @@ export const ItemListContainer = ({greeting}) => {
         }
 
         try {
-            const response = await fetch(`/src/api/${category}.json`)
+            const response = await fetch(`/api/${category}.json`)
             const data = await response.json()
             setProducts(data)
         } catch (error) {

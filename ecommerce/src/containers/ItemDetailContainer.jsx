@@ -15,7 +15,7 @@ export const ItemDetailContainer = () => {
     const { category, productId } = params
 
     const getProducts = async () => {
-        const response = await fetch(`/src/api/${category}.json`)
+        const response = await fetch(`/api/${category}.json`)
         const data = await response.json()
         const product = data.find(product => product.id === +productId ? product : "")
 
