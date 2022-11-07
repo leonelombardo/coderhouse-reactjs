@@ -1,6 +1,13 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
+    styles: {
+        global: {
+            body: {
+                overflowX: "hidden"
+            }
+        }
+    },
     colors: {
         primary: {
             200: "#666",
@@ -30,6 +37,21 @@ export const theme = extendTheme({
         Text: {
             baseStyle: {
                 color: "primary.500"
+            }
+        },
+        Button: {
+            variants: {
+                outline: {
+                    paddingY: 1,
+                    paddingX: 2,
+                    height: "auto",
+                    borderColor: "secondary",
+                }
+            }
+        },
+        Heading: {
+            baseStyle: {
+                fontFamily: "Inter Tight"
             }
         }
     }

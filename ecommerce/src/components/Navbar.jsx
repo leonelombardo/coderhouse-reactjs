@@ -29,13 +29,18 @@ export const Navbar = () => {
                 </Link>
                 <Flex as="ul" flexDirection={{base: "column", md: "row"}} alignItems="center" gap={8}>
                     <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2} fontSize={{base: 32, md: 20}}>
-                        <Link to="/home">
+                        <Link to="/">
                             <Text fontWeight={700} >Home</Text>
                         </Link>
                     </Flex>
                     <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2} fontSize={{base: 32, md: 20}}>
-                        <Link to="/products">
-                            <Text fontWeight={700} >Products</Text>
+                        <Link to="/category/skateboards">
+                            <Text fontWeight={700} >Skateboards</Text>
+                        </Link>
+                    </Flex>
+                    <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2} fontSize={{base: 32, md: 20}}>
+                        <Link to="/category/clothing">
+                            <Text fontWeight={700} >Clothing</Text>
                         </Link>
                     </Flex>
                     <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2}>

@@ -1,24 +1,36 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 
 import { theme } from './theme'
 import { Navbar } from './components/Navbar'
-import { Home } from './pages/Home'
+
+import { Context } from './context'
+import { Wrapper } from './components/Wrapper'
+import { AnimatedRoutes } from './AnimatedRoutes'
 
 export const App = () => {
+  const [cart, setCart] = useState([])
+
+  const globalContext = {
+    cart,
+    setCart
+  }
+
+  useEffect(()=> {
+    console.log(cart)
+  }, [cart])
+
   return (
-    <ChakraProvider theme={theme}>
-      <Router>
-        <div className="App">
-          <Navbar/>
-          <Routes>
-            <Route exact path="/" element={<Home/>}/>
-            <Route exact path="/home" element={<Home/>}/>
-            <Route exact path="/products" element={<Home/>}/>
-            <Route path="/" element={<Home/>}/>
-          </Routes>
-        </div>
-      </Router>
-    </ChakraProvider>
+    <Context.Provider value={globalContext}>
+      <ChakraProvider theme={theme}>
+        <Router>
+            <Navbar/>
+            <Wrapper>
+              <AnimatedRoutes/>
+            </Wrapper>
+        </Router>
+      </ChakraProvider>
+    </Context.Provider> 
   )
 }
