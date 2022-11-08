@@ -6,7 +6,6 @@ import { theme } from './theme'
 import { Navbar } from './components/Navbar'
 
 import { Context } from './context'
-import { Wrapper } from './components/Wrapper'
 import { AnimatedRoutes } from './AnimatedRoutes'
 
 export const App = () => {
@@ -26,9 +25,7 @@ export const App = () => {
       <ChakraProvider theme={theme}>
         <Router>
             <Navbar/>
-            <Wrapper>
-              <AnimatedRoutes/>
-            </Wrapper>
+            <AnimatedRoutes/>
         </Router>
       </ChakraProvider>
     </Context.Provider> 

@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { MdOutlineShoppingCart } from 'react-icons/md'
 
 import { formatPrice } from "../services/formatPrice"
+import { Wrapper } from "../components/Wrapper"
 
 export const ItemDetailContainer = () => {
     const [product, setProduct] = useState("")
@@ -36,27 +37,29 @@ export const ItemDetailContainer = () => {
 
     return (
         <>
-            {
-                product
-                    ? <Flex gap={8} maxWidth={1000} minWidth={250} maxHeight={500} padding={8}>
-                        <Image src={product.image} alt={product.name} maxWidth={350} height="auto" objectFit="contain" borderRadius={12}/>
-                        <Flex flexDirection="column" justifyContent="space-between" gap={4}>
-                            <Flex  flexDirection="column" gap={2}>
-                                <Heading as="h1" fontSize={32} fontWeight={1000}>{product.name.toUpperCase()}</Heading>
-                                <Text as="span" fontSize={24}>{formatPrice(product.price)}</Text>
-                            </Flex>
-                            <Flex flexDirection="column" gap={4} maxWidth={350}>
-                                <Flex width="100%" gap={4}>
-                                    <Button onClick={removeProduct}>-</Button>
-                                    <input type="number" value={productQuantity} style={{textAlign: "center", flex: 1}} />
-                                    <Button onClick={addProduct}>+</Button>
+            <Wrapper>
+                {
+                    product
+                        ? <Flex gap={8} maxWidth={1000} minWidth={250} maxHeight={500} padding={8}>
+                            <Image src={product.image} alt={product.name} maxWidth={350} height="auto" objectFit="contain" borderRadius={12}/>
+                            <Flex flexDirection="column" justifyContent="space-between" gap={4}>
+                                <Flex  flexDirection="column" gap={2}>
+                                    <Heading as="h1" fontSize={32} fontWeight={1000}>{product.name.toUpperCase()}</Heading>
+                                    <Text as="span" fontSize={24}>{formatPrice(product.price)}</Text>
                                 </Flex>
-                                <Button leftIcon={<MdOutlineShoppingCart/>}>Add to cart</Button>
+                                <Flex flexDirection="column" gap={4} maxWidth={350}>
+                                    <Flex width="100%" gap={4}>
+                                        <Button onClick={removeProduct}>-</Button>
+                                        <input type="number" value={productQuantity} style={{textAlign: "center", flex: 1}} />
+                                        <Button onClick={addProduct}>+</Button>
+                                    </Flex>
+                                    <Button leftIcon={<MdOutlineShoppingCart/>}>Add to cart</Button>
+                                </Flex>
                             </Flex>
                         </Flex>
-                    </Flex>
-                    : navigateTo("/404")
-            }
+                        : navigateTo("/404")
+                }
+            </Wrapper>
         </>
     )
 }
