@@ -43,9 +43,11 @@ export const Navbar = () => {
                             <Text fontWeight={700} >Clothing</Text>
                         </Link>
                     </Flex>
-                    <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2}>
-                        <CartWidget/>
-                    </Flex>
+                    <Link to="/checkout">
+                        <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2}>
+                            <CartWidget/>
+                        </Flex>
+                    </Link>
                 </Flex>
             </Container>
             <Box as={motion.button} {...togglerVariants} whileTap={{scale: 0.5}} position="fixed" right={5} top={5} fontSize={32} display={{base: "flex", md: "none"}}>
