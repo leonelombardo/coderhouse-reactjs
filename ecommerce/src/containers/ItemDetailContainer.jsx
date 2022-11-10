@@ -37,10 +37,6 @@ export const ItemDetailContainer = () => {
         getProducts()
     }, [category, productId])
 
-    useEffect(()=> {
-        console.log(productQuantity)
-    }, [productQuantity])
-
     return (
         <>
             <Wrapper>
