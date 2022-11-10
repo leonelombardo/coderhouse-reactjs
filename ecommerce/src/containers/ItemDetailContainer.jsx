@@ -56,7 +56,7 @@ export const ItemDetailContainer = () => {
                                 <Flex flexDirection="column" gap={4} maxWidth={350}>
                                     <Flex width="100%" gap={4}>
                                         <Button onClick={removeProduct}>-</Button>
-                                        <input type="number" value={productQuantity} onChange={handleInputQuantity} style={{textAlign: "center", flex: 1}} />
+                                        <input type="number" value={productQuantity} onChange={handleInputQuantity} readOnly style={{textAlign: "center", flex: 1, outline: "none", border: "none"}}/>
                                         <Button onClick={addProduct}>+</Button>
                                     </Flex>
                                     <Button leftIcon={<MdOutlineShoppingCart/>}>Add to cart</Button>
