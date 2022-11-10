@@ -1,0 +1,50 @@
+[
+    {
+        "id": 0,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 40,
+        "image": "/clothing/element/element-1.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-joint-hoodie-194844133311.html"
+    },
+    {
+        "id": 1,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 40,
+        "image": "/clothing/element/element-2.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-joint-hoodie-194844133311.html"
+    },
+    {
+        "id": 2,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 45,
+        "image": "/clothing/element/element-3.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-seal-hoodie-194844175724.html"
+    },
+    {
+        "id": 3,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 45,
+        "image": "/clothing/element/element-4.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-seal-hoodie-194844175724.html"
+    },
+    {
+        "id": 4,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 45,
+        "image": "/clothing/element/element-5.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-seal-hoodie-194844175724.html"
+    },
+    {
+        "id": 5,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 40,
+        "image": "/clothing/element/element-6.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-vertical-hoodie-194844144720.html"
+    }
+]

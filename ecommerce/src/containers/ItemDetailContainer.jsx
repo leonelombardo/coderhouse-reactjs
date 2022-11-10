@@ -22,25 +22,31 @@ export const ItemDetailContainer = () => {
 
         setProduct(product)
     }
+    
+    const removeProduct = () => {
+        setProductQuantity(previous => previous <= 0 ? 0 : previous - 1)
+    }
 
     const addProduct = () => {
         setProductQuantity(previous => previous + 1)
     }
 
-    const removeProduct = () => {
-        setProductQuantity(previous => previous <= 0 ? 0 : previous - 1)
-    }
-    
+    const handleInputQuantity = (event) => setProductQuantity(+event.target.value)
+
     useEffect(()=> {
         getProducts()
     }, [category, productId])
+
+    useEffect(()=> {
+        console.log(productQuantity)
+    }, [productQuantity])
 
     return (
         <>
             <Wrapper>
                 {
                     product
-                        ? <Flex gap={8} maxWidth={1000} minWidth={250} maxHeight={500} padding={8}>
+                        ? <Flex gap={24} maxWidth={1000} minWidth={250} maxHeight={500} padding={8}>
                             <Image src={product.image} alt={product.name} maxWidth={350} height="auto" objectFit="contain" borderRadius={12}/>
                             <Flex flexDirection="column" justifyContent="space-between" gap={4}>
                                 <Flex  flexDirection="column" gap={2}>
@@ -50,7 +56,7 @@ export const ItemDetailContainer = () => {
                                 <Flex flexDirection="column" gap={4} maxWidth={350}>
                                     <Flex width="100%" gap={4}>
                                         <Button onClick={removeProduct}>-</Button>
-                                        <input type="number" value={productQuantity} style={{textAlign: "center", flex: 1}} />
+                                        <input type="number" value={productQuantity} onChange={handleInputQuantity} style={{textAlign: "center", flex: 1}} />
                                         <Button onClick={addProduct}>+</Button>
                                     </Flex>
                                     <Button leftIcon={<MdOutlineShoppingCart/>}>Add to cart</Button>

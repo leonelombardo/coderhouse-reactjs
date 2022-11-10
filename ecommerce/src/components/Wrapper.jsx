@@ -15,7 +15,7 @@ export const Wrapper = ({children, ...props}) => {
     }
 
     return (
-        <Container as={motion.div} {...pageVariants} {...props} display="flex" flexDirection="column" alignItems="center" gap={16} maxWidth="100vw" width="100%" minHeight="100vH" height="100%" backgroundColor="secondary.500" zIndex={1} paddingTop="80px">
+        <Container as={motion.div} {...pageVariants} {...props} display="flex" flexDirection="column" alignItems="center" gap={16} maxWidth="100vw" width="100%" minHeight="100vH" height="100%" backgroundColor="secondary.500" zIndex={1} paddingTop="80px" paddingBottom="48px">
             {children}
         </Container>
     )

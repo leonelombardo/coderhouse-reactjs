@@ -24,7 +24,7 @@ export const ItemListContainer = ({greeting}) => {
     }
 
     useEffect(() => {
-        getProducts(categoryId)   
+        getProducts(categoryId)
     }, [categoryId])
 
     return (
