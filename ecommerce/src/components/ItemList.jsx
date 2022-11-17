@@ -7,7 +7,7 @@ export const ItemList = ({category, products}) => {
         <Wrapper>
             <Heading as="h1" fontSize={{base: 32, md: 64}} fontWeight={1000}>{category.toUpperCase()}</Heading>
                 {
-                    products.length
+                    products?.length
                         ? <Grid templateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={8} width="100%">
                             {
                             products.map(product => (

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { Container, Heading } from "@chakra-ui/react"
+import { collection, query, getDocs } from "firebase/firestore"
+
+import { db } from "../firebase/client"
 
 import { ItemList } from "../components/ItemList"
 import { Wrapper } from "../components/Wrapper"
@@ -9,22 +12,27 @@ export const ItemListContainer = ({greeting}) => {
     const [products, setProducts] = useState([])
     const { categoryId } = useParams()
 
-    const getProducts = async (category) => {
+    const getSkateboards = async (category) => {
         if(!category){
             return
         }
 
-        try {
-            const response = await fetch(`/api/${category}.json`)
-            const data = await response.json()
-            setProducts(data)
-        } catch (error) {
+        const q = query(collection(db, category));
+
+        try{
+            const querySnapshot = await getDocs(q)
+            querySnapshot.forEach(doc => setProducts(previous => [...previous, {id: doc.id, ...doc.data()}]))
+        }catch(error){
             console.log(error)
         }
     }
 
+    useEffect(()=> {
+        getSkateboards()
+    }, [])
+
     useEffect(() => {
-        getProducts(categoryId)
+        getSkateboards(categoryId)
     }, [categoryId])
 
     return (

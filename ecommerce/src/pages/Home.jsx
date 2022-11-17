@@ -1,4 +1,5 @@
 import { Flex, Heading, Text } from "@chakra-ui/react"
+
 import { Wrapper } from "../components/Wrapper"
 
 export const Home = () => {
