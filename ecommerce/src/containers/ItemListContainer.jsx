@@ -7,10 +7,12 @@ import { db } from "../firebase/client"
 
 import { ItemList } from "../components/ItemList"
 import { Wrapper } from "../components/Wrapper"
+import { Spinner } from "../components/Spinner"
 
 export const ItemListContainer = ({greeting}) => {
     const [products, setProducts] = useState([])
     const { categoryId } = useParams()
+    const [isLoading, setIsLoading] = useState(true)
 
     const getSkateboards = async (category) => {
         if(!category){
@@ -22,6 +24,7 @@ export const ItemListContainer = ({greeting}) => {
         try{
             const querySnapshot = await getDocs(q)
             querySnapshot.forEach(doc => setProducts(previous => [...previous, {id: doc.id, ...doc.data()}]))
+            setIsLoading(false)
         }catch(error){
             console.log(error)
         }
@@ -34,6 +37,10 @@ export const ItemListContainer = ({greeting}) => {
     useEffect(() => {
         getSkateboards(categoryId)
     }, [categoryId])
+
+    if(isLoading){
+        return <Spinner/>
+    }
 
     return (
         <Wrapper>

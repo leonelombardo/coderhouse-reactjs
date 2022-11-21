@@ -1,0 +1,194 @@
+[
+    {
+        "id": 0,
+        "name": "mi amor deck skateboard deck",
+        "brand": "element",
+        "price": 64,
+        "image": "/skates/element/element-1.jpg",
+        "url": "https://www.elementbrand.com/mi-amor-deck-skateboard-deck-194844160140.html"
+    },
+    {
+        "id": 1,
+        "name": "element x jake foreman future skateboard deck",
+        "brand": "element",
+        "price": 64,
+        "image": "/skates/element/element-2.jpg",
+        "url": "https://www.elementbrand.com/element-x-jake-foreman-future-skateboard-deck-194844160188.html"
+    },
+    {
+        "id": 2,
+        "name": "timber | late bloomers bouquet skateboard deck",
+        "brand": "element",
+        "price": 64,
+        "image": "/skates/element/element-3.jpg",
+        "url": "https://www.elementbrand.com/timber-%257c-late-bloomers-bouquet-skateboard-deck-194844160065.html"
+    },
+    {
+        "id": 3,
+        "name": "timber garden bygone skateboard deck",
+        "brand": "element",
+        "price": 60,
+        "image": "/skates/element/element-4.jpg",
+        "url": "https://www.elementbrand.com/timber-garden-bygone-skateboard-deck-194844150455.html"
+    },
+    {
+        "id": 4,
+        "name": "timber garden stump skateboard deck",
+        "brand": "element",
+        "price": 60,
+        "image": "/skates/element/element-5.jpg",
+        "url": "https://www.elementbrand.com/timber-garden-stump-skateboard-deck-194844150578.html"
+    },
+    {
+        "id": 5,
+        "name": "moondust appleyard skateboard deck",
+        "brand": "element",
+        "price": 60,
+        "image": "/skates/element/element-6.jpg",
+        "url": "https://www.elementbrand.com/moondust-appleyard-skateboard-deck-194844151490.html"
+    },
+    {
+        "id": 6,
+        "name": "team sorry yellow 20th 8.4\"",
+        "brand": "flip",
+        "price": 64.99,
+        "image": "/skates/flip/flip-1.webp",
+        "url": "https://flipskateboards.com/collections/summer-2021/products/team-sorry-yellow-20th-8-4?variant=41313521139759"
+    },
+    {
+        "id": 7,
+        "name": "team sorry black 20th 8.00\" x 31.5\"",
+        "brand": "flip",
+        "price": 64.99,
+        "image": "/skates/flip/flip-2.webp",
+        "url": "https://flipskateboards.com/collections/summer-2021/products/salabanzi-sorry-20th-8-13-x-32-00?variant=40032621133871"
+    },
+    {
+        "id": 8,
+        "name": "penny lazy daze 8.00\" x 31.50\"",
+        "brand": "flip",
+        "price": 64.99,
+        "image": "/skates/flip/flip-3.webp",
+        "url": "https://flipskateboards.com/collections/summer-2021/products/penny-lazy-daze-8-00-x-31-50?variant=39248647159855"
+    },
+    {
+        "id": 9,
+        "name": "team strobe orange \"full shape\" 8.25\" x 32.88\"",
+        "brand": "flip",
+        "price": 64.99,
+        "image": "/skates/flip/flip-4.webp",
+        "url": "https://flipskateboards.com/collections/summer-2021/products/team-strobe-orange-8-25-x-32-88?variant=39248754212911"
+    },
+    {
+        "id": 10,
+        "name": "team strobe blue \"full shape\" 8.13\" x 31.50\"",
+        "brand": "flip",
+        "price": 64.99,
+        "image": "/skates/flip/flip-5.webp",
+        "url": "https://flipskateboards.com/collections/summer-2021/products/team-strobe-blue-8-13-x-31-50?variant=39248752246831"
+    },
+    {
+        "id": 11,
+        "name": "team strobe black \"full shape\" 8.50\" x 32.00\"",
+        "brand": "flip",
+        "price": 64.99,
+        "image": "/skates/flip/flip-6.webp",
+        "url": "https://flipskateboards.com/collections/summer-2021/products/team-strobe-black-8-50-x-32-00?variant=39248756572207"
+    },
+    {
+        "id": 12,
+        "name": "8.25in x 31.8in braun munchies everslick santa cruz skateboard deck",
+        "brand": "santa cruz",
+        "price": 78.95,
+        "image": "/skates/santacruz/santacruz-1.webp",
+        "url": "https://nhsskatedirect.com/products/8-25in-x-31-8in-braun-munchies-everslick-santa-cruz-skateboard-deck?variant=42049008697501"
+    },
+    {
+        "id": 13,
+        "name": "8.25in x 31.8in braun great outdoors everslick santa cruz skateboard deck",
+        "brand": "santa cruz",
+        "price": 78.95,
+        "image": "/skates/santacruz/santacruz-2.webp",
+        "url": "https://nhsskatedirect.com/products/8-25in-x-31-8in-braun-great-outdoors-everslick-santa-cruz-skateboard-deck?variant=41559454089373"
+    },
+    {
+        "id": 14,
+        "name": "8.375in x 32in johnson beast wagon pro santa cruz skateboard deck",
+        "brand": "santa cruz",
+        "price": 68.95,
+        "image": "/skates/santacruz/santacruz-3.webp",
+        "url": "https://nhsskatedirect.com/products/8-375in-x-32in-johnson-beast-wagon-pro-santa-cruz?variant=42402515386525"
+    },
+    {
+        "id": 15,
+        "name": "8.25in x 31.60in delfino ego vx deck santa cruz skateboard deck",
+        "brand": "santa cruz",
+        "price": 91.95,
+        "image": "/skates/santacruz/santacruz-4.webp",
+        "url": "https://nhsskatedirect.com/products/8-25in-x-31-60in-delfino-ego-vx-deck-santa-cruz?utm_source=santacruzskateboards.com&utm_medium=referral&utm_campaign=name-shop&utm_content=Delfino%20Ego%20VX%20Deck%20Skateboard%20Deck%208.25in%20x%2031.60in%20Santa%20Cruz"
+    },
+    {
+        "id": 16,
+        "name": "8.25in x 31.83in mccoy outlier vx deck santa cruz skateboard deck",
+        "brand": "santa cruz",
+        "price": 91.95,
+        "image": "/skates/santacruz/santacruz-5.webp",
+        "url": "https://nhsskatedirect.com/products/8-25in-x-31-83in-mccoy-outlier-vx-deck-santa-cruz-skateboard-deck?variant=43119552102557"
+    },
+    {
+        "id": 17,
+        "name": "8.3in x 32.2in gravette hippie skull sc pro santa cruz skateboard deck",
+        "brand": "santa cruz",
+        "price": 91.95,
+        "image": "/skates/santacruz/santacruz-6.webp",
+        "url": "https://nhsskatedirect.com/products/8-3in-x-32-2in-gravette-hippie-skull-sc-pro-santa-cruz?utm_source=santacruzskateboards.com&utm_medium=referral&utm_campaign=name-shop&utm_content=Gravette%20Hippie%20Skull%20SC%20Pro%20Skateboard%20Deck%208.3in%20x%2032.2in%20Santa%20Cruz"
+    },
+    {
+        "id": 18,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 40,
+        "image": "/clothing/element/element-1.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-joint-hoodie-194844133311.html"
+    },
+    {
+        "id": 19,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 40,
+        "image": "/clothing/element/element-2.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-joint-hoodie-194844133311.html"
+    },
+    {
+        "id": 20,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 45,
+        "image": "/clothing/element/element-3.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-seal-hoodie-194844175724.html"
+    },
+    {
+        "id": 21,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 45,
+        "image": "/clothing/element/element-4.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-seal-hoodie-194844175724.html"
+    },
+    {
+        "id": 22,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 45,
+        "image": "/clothing/element/element-5.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-seal-hoodie-194844175724.html"
+    },
+    {
+        "id": 23,
+        "name": "boys' joint hoodie",
+        "brand": "element",
+        "price": 40,
+        "image": "/clothing/element/element-6.jpg",
+        "url": "https://www.elementbrand.com/boys%2527-vertical-hoodie-194844144720.html"
+    }
+]
