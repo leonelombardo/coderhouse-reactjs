@@ -43,8 +43,8 @@ export const ItemListContainer = ({greeting}) => {
     }
 
     return (
-        <Wrapper>
-            <Container display="flex" alignItems="center">
+        <>
+            <Wrapper>
                 {
                     categoryId === "skateboards"
                         ? <ItemList category={categoryId} products={products}/>
@@ -52,7 +52,7 @@ export const ItemListContainer = ({greeting}) => {
                             ? <ItemList category={categoryId} products={products}/>
                             : <Heading as={motion.p} fontSize={{base: 24, md: 48}} fontWeight={1000} textAlign="center" display="flex" {...wordVariants}>Something went wrong</Heading>
                 }
-            </Container>
-        </Wrapper>
+            </Wrapper>
+        </>
     )
 }

@@ -1,20 +1,20 @@
 import { useEffect, useState, useContext } from "react"
 import { useParams } from "react-router-dom"
 import { Button, Flex, Heading, Image, Text } from "@chakra-ui/react"
-import { collection, query, where, getDocs } from "firebase/firestore"
-
+import { doc, getDoc } from "firebase/firestore"
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 import { MdOutlineShoppingCart } from 'react-icons/md'
-import { db } from "../firebase/client"
 
-import { formatPrice } from "../services/formatPrice"
+import { db } from "../firebase/client"
+import { Context } from "../context"
+
 import { Wrapper } from "../components/Wrapper"
 import { Error404 } from "./Error404"
 import { Spinner } from "../components/Spinner"
 
-import { Context } from "../context"
-
-import { toast, ToastContainer } from 'react-toastify'
-import "react-toastify/dist/ReactToastify.css"
+import { notifyError, notifySuccess } from "../services/notifications"
+import { formatPrice } from "../services/formatPrice"
 
 export const ItemDetailContainer = () => {
     const [product, setProduct] = useState("")
@@ -25,41 +25,17 @@ export const ItemDetailContainer = () => {
     
     const params = useParams()
     const { category, productId } = params
-    
-    const notifyError = (message) => {
-        toast.error(message, {
-            position: "bottom-center",
-            autoClose: 2500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            })
-    }
-
-    const notifySuccess = (message) => {
-        toast.success(message, {
-            position: "bottom-center",
-            autoClose: 2500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            })
-    }
 
     const getProduct = async (category, id) => {
-        const q = query(collection(db, category), where("id", "==", +id));
-        
         try{
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-              setProduct({id: doc.id, ...doc.data()});
-            })
+            const docRef = doc(db, category, id);
+            const docSnap = await getDoc(docRef);
+    
+            if (docSnap.exists()) {
+                setProduct({id: docSnap.id, ...docSnap.data()})
+            } else {
+                console.log("No such document!");
+            }
 
             setIsLoading(false)
         }catch(error){
@@ -86,6 +62,7 @@ export const ItemDetailContainer = () => {
                 const reduced = total.reduce((arr, item) => {
                     const repeated = arr.find(element => element.id === item.id)
 
+                    console.log(repeated)
                     if(repeated){
                         const newArray = arr.map(element => element.id === item.id ? {...item, quantity: productQuantity} : element)
                         return newArray
@@ -123,15 +100,16 @@ export const ItemDetailContainer = () => {
                             <Flex flexDirection="column" justifyContent="space-between" alignItems="center" gap={16} maxWidth={{base: 350, md: 500}}>
                                 <Flex flexDirection="column" gap={2}>
                                     <Heading as="h1" fontSize={32} fontWeight={1000}>{product?.name?.toUpperCase()}</Heading>
+                                    <Text as="span" fontSize={14}>Stock: {product.stock}</Text>
                                     <Text as="span" fontSize={24}>{formatPrice(product?.price)}</Text>
                                 </Flex>
                                 <Flex flexDirection="column" gap={4} maxWidth={350}>
                                     <Flex width="100%" gap={4}>
-                                        <Button onClick={removeProduct}>-</Button>
+                                        <Button onClick={removeProduct} disabled={product.stock ? false : true}>-</Button>
                                         <input type="number" value={productQuantity} onChange={handleInputQuantity} readOnly style={{textAlign: "center", flex: 1, outline: "none", border: "none"}}/>
-                                        <Button onClick={addProduct}>+</Button>
+                                        <Button onClick={addProduct} disabled={product.stock ? false : true}>+</Button>
                                     </Flex>
-                                    <Button leftIcon={<MdOutlineShoppingCart/>} onClick={() => addToCart(product.id)}>Add to cart</Button>
+                                    <Button leftIcon={<MdOutlineShoppingCart/>} onClick={() => addToCart(product.id)} disabled={product.stock ? false : true}>Add to cart</Button>
                                 </Flex>
                             </Flex>
                         </Flex>

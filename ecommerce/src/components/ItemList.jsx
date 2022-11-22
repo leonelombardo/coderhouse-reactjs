@@ -6,7 +6,7 @@ import { Title } from "./Title"
 
 export const ItemList = ({category, products}) => {
     return (
-        <Wrapper>
+        <>
             <Title>{category.toUpperCase()}</Title>
                 {
                     products?.length
@@ -19,6 +19,6 @@ export const ItemList = ({category, products}) => {
                         </Grid>
                         : <Text as="span" width="100%" textAlign="center" color="gray.400">There are no products</Text>
                 }
-        </Wrapper>
+        </>
     )
 }

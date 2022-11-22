@@ -11,6 +11,7 @@ export const ItemCard = ({product, category}) => {
                 <Flex flexDirection="column" flex={1} justifyContent="space-between" gap={8} padding={8} backgroundColor="#fff" borderRadius={15}>
                     <Flex flexDirection="column" gap={2}>
                         <Heading as="h1" fontSize={18} fontWeight={1000}>{product.name.toUpperCase()}</Heading>
+                        <Text as="span" fontSize={12}>Stock: {product.stock}</Text>
                         <Text as="span" fontSize={14}>{formatPrice(product?.price)}</Text>
                     </Flex>
                 </Flex>
