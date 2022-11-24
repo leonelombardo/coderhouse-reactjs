@@ -4,14 +4,13 @@ import { Box, Button, Flex, Heading, Icon, Image, Text } from '@chakra-ui/react'
 import { formatPrice } from '../services/formatPrice'
 import { Context } from "../context"
 
-import { MdAdd } from "react-icons/md"
+import { MdAdd, MdRemove } from "react-icons/md"
 
 export const CartCard = ({product}) => {
     const context = useContext(Context)
     const { cart, setCart } = context
 
     const removeProduct = (id) => {
-        console.log(cart)
         setCart(previous => {
                 const thisProduct = previous.find(product => product.id === id ? product : "")
 
@@ -25,7 +24,7 @@ export const CartCard = ({product}) => {
     }
 
     const addProduct = (id) => {
-        setCart(previous => previous.map(product => product.id === id ? {...product, quantity: product.quantity + 1} : product))
+        setCart(previous => previous.map(product => product.id === id ? {...product, quantity: product.quantity >= product.stock ? product.quantity : product.quantity + 1} : product))
     }
 
     const deleteProduct = (id) => {
@@ -47,9 +46,13 @@ export const CartCard = ({product}) => {
                     <Flex gap={2} alignItems="center">
                         <Flex gap={2} flexDirection="column" alignSelf="center">
                             <Flex gap={2} alignItems="center">
-                                <Button size="xs" onClick={() => removeProduct(product.id)}>-</Button>
+                                <Button size="xs" onClick={() => removeProduct(product.id)}>
+                                    <Icon as={MdRemove}/>
+                                </Button>
                                 <Text as="span" fontSize={12}>{product.quantity}</Text>
-                                <Button size="xs" onClick={() => addProduct(product.id)}>+</Button>
+                                <Button size="xs" onClick={() => addProduct(product.id)} disabled={product.quantity >= product.stock}>
+                                    <Icon as={MdAdd}/>
+                                </Button>
                             </Flex>
                             <Text textAlign="center" fontSize={12}>{formatPrice(product.price * product.quantity)}</Text>
                         </Flex>

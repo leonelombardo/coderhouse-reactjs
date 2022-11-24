@@ -1,10 +1,10 @@
 import { useEffect, useState, useContext } from "react"
 import { useParams } from "react-router-dom"
-import { Button, Flex, Heading, Image, Text } from "@chakra-ui/react"
+import { Button, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react"
 import { doc, getDoc } from "firebase/firestore"
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
-import { MdOutlineShoppingCart } from 'react-icons/md'
+import { MdAdd, MdOutlineShoppingCart, MdRemove } from 'react-icons/md'
 
 import { db } from "../firebase/client"
 import { Context } from "../context"
@@ -20,6 +20,8 @@ export const ItemDetailContainer = () => {
     const [product, setProduct] = useState("")
     const [productQuantity, setProductQuantity] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
+    const [isOutOfStock, setIsOutOfStock] = useState(false)
+
     const context = useContext(Context)
     const { cart, setCart } = context
     
@@ -34,7 +36,7 @@ export const ItemDetailContainer = () => {
             if (docSnap.exists()) {
                 setProduct({id: docSnap.id, ...docSnap.data()})
             } else {
-                console.log("No such document!");
+                notifyError(`Product "${product.name.toUpperCase()}" is gone.`)
             }
 
             setIsLoading(false)
@@ -44,11 +46,26 @@ export const ItemDetailContainer = () => {
     }
     
     const removeProduct = () => {
-        setProductQuantity(previous => previous <= 0 ? 0 : previous - 1)
-    }
+        if(productQuantity <= product.stock){
+            setProductQuantity(previous => previous - 1)
+            setIsOutOfStock(false)
+        }else{
+            return
+        }
 
+    }
+    
     const addProduct = () => {
-        setProductQuantity(previous => previous + 1)
+        const timer = () => setTimeout(() => {
+            setIsOutOfStock(false)
+        }, 3000)
+
+        if(productQuantity >= product.stock){
+            setIsOutOfStock(true)
+            timer()
+        }else{
+            setProductQuantity(previous => previous + 1)
+        }
     }
 
     const addToCart = (id) => {
@@ -57,12 +74,11 @@ export const ItemDetailContainer = () => {
         }
 
         setCart(previous => {
-            if(previous){
+            if(previous.length){
                 const total = [...previous, {...product, quantity: productQuantity}]
                 const reduced = total.reduce((arr, item) => {
                     const repeated = arr.find(element => element.id === item.id)
 
-                    console.log(repeated)
                     if(repeated){
                         const newArray = arr.map(element => element.id === item.id ? {...item, quantity: productQuantity} : element)
                         return newArray
@@ -73,7 +89,7 @@ export const ItemDetailContainer = () => {
                 
                 return reduced
             }else{
-                return [...previous, {...product, quantity: productQuantity}]
+                return [{...product, quantity: productQuantity}]
             }
         })
 
@@ -92,31 +108,35 @@ export const ItemDetailContainer = () => {
 
     return (
         <>
-            {
-                product
-                    ? <Wrapper>
-                        <Flex gap={24} maxWidth={1000} minWidth={250} padding={8} flexWrap={{base: "wrap", md: "nowrap"}} justifyContent="center">
-                            <Image src={product?.image} alt={product?.name} maxWidth={350} maxHeight={350} objectFit="contain" borderRadius={12}/>
-                            <Flex flexDirection="column" justifyContent="space-between" alignItems="center" gap={16} maxWidth={{base: 350, md: 500}}>
-                                <Flex flexDirection="column" gap={2}>
-                                    <Heading as="h1" fontSize={32} fontWeight={1000}>{product?.name?.toUpperCase()}</Heading>
-                                    <Text as="span" fontSize={14}>Stock: {product.stock}</Text>
-                                    <Text as="span" fontSize={24}>{formatPrice(product?.price)}</Text>
-                                </Flex>
-                                <Flex flexDirection="column" gap={4} maxWidth={350}>
-                                    <Flex width="100%" gap={4}>
-                                        <Button onClick={removeProduct} disabled={product.stock ? false : true}>-</Button>
-                                        <input type="number" value={productQuantity} onChange={handleInputQuantity} readOnly style={{textAlign: "center", flex: 1, outline: "none", border: "none"}}/>
-                                        <Button onClick={addProduct} disabled={product.stock ? false : true}>+</Button>
+                {
+                    product
+                        ? <Wrapper>
+                            <Flex gap={24} maxWidth={1000} minWidth={250} padding={8} flexWrap={{base: "wrap", md: "nowrap"}} justifyContent="center">
+                                <Image src={product?.image} alt={product?.name} maxWidth={350} maxHeight={350} objectFit="contain" borderRadius={12}/>
+                                <Flex flexDirection="column" justifyContent="space-between" alignItems="center" gap={16} maxWidth={{base: 350, md: 500}}>
+                                    <Flex flexDirection="column" gap={2}>
+                                        <Heading as="h1" fontSize={32} fontWeight={1000}>{product?.name?.toUpperCase()}</Heading>
+                                        <Text as="span" fontSize={14}>Stock: {product.stock}</Text>
+                                        <Text as="span" fontSize={24}>{formatPrice(product?.price)}</Text>
                                     </Flex>
-                                    <Button leftIcon={<MdOutlineShoppingCart/>} onClick={() => addToCart(product.id)} disabled={product.stock ? false : true}>Add to cart</Button>
+                                    <Flex flexDirection="column" gap={4} maxWidth={350}>
+                                        <Flex width="100%" gap={4} backgroundColor="secondary.500" zIndex="1">
+                                            <Button onClick={removeProduct} disabled={!product.stock}>
+                                                <Icon as={MdRemove}/>
+                                            </Button>
+                                            <input type="number" value={productQuantity} onChange={handleInputQuantity} readOnly style={{textAlign: "center", flex: 1, outline: "none", border: "none"}}/>
+                                            <Button onClick={addProduct} disabled={!product.stock || productQuantity >= product.stock}>
+                                                <Icon as={MdAdd}/>
+                                            </Button>
+                                        </Flex>
+                                        <Button leftIcon={<MdOutlineShoppingCart/>} onClick={() => addToCart(product.id)} disabled={!product.stock}>Add to cart</Button>
+                                    </Flex>
                                 </Flex>
                             </Flex>
-                        </Flex>
-                        <ToastContainer/>
-                    </Wrapper>
-                    : <Error404/>
-            }
-        </>
+                            <ToastContainer/>
+                        </Wrapper>
+                        : <Error404/>
+                    }
+            </>
     )
 }

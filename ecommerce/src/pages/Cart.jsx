@@ -17,7 +17,7 @@ export const Cart = () => {
     const context = useContext(Context)
     const { cart, setCart } = context
     const [items, setItems] = useState([])
-    const totalPrice = cart?.reduce((total, product) => total + (product.price * product.quantity), 0)
+    const totalPrice = cart.length ? cart.reduce((total, product) => total + (product.price * product.quantity), 0) : cart
 
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
@@ -66,10 +66,33 @@ export const Cart = () => {
 
     const handleForm = async (event) => {
         event.preventDefault()
-
-        
+        try{
+            setCart(async (product) => {
+                try{
+                    console.log(product)
+                    const docRef = doc(db, product.category, product.id)
+                    const docSnap = await getDoc(docRef)
+                    const { stock } = docSnap.data()
+    
+                    if(docSnap.exists()) {
+                        if(stock >= product.quantity){
+                            return product
+                        }else{
+                            return notifyError(`Product "${product.name.toUpperCase()}" is out of stock.`)
+                        }
+                    }else {
+                        return notifyError(`Product "${product.name.toUpperCase()}" is gone.`)
+                    }
+                }
+                catch(error){
+                    console.log(error)
+                }
+            })
+        }
+        catch(error){
+            console.log(error)
+        }
     }
-
 
     return (
         <>
