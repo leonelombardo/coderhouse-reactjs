@@ -1,6 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app"
-import { getFirestore, addDoc, collection } from "firebase/firestore"
+import { getFirestore, addDoc, collection, doc, getDoc, updateDoc } from "firebase/firestore";
+
+import { notifyError, notifySuccess } from "../services/notifications";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -29,3 +31,40 @@ export const db = getFirestore(app)
 //         console.log(error)
 //     }
 // }
+
+export const updateStock = async (product) => {
+  const docRef = doc(db, product.category, product.id)
+  const docSnap = await getDoc(docRef)
+  const stock = docSnap.data().stock
+
+  try{
+    if(docSnap.exists()) {
+        if(stock >= product.quantity){
+            await updateDoc(docRef, { stock: stock - product.quantity});
+            return docSnap.data()
+        }else{
+            notifyError(`Product "${product.name.toUpperCase()}" is out of stock.`)
+        }
+    }else {
+        notifyError(`Product "${product.name.toUpperCase()}" is gone.`)
+    }
+  }catch(error){
+    console.log(error)
+  }
+
+}
+
+export const createNewOrder = async (name, phone, email, cart) => {
+  const newOrder = {
+    buyer: {
+        name,
+        phone,
+        email
+    },
+    items: cart,
+    createdAt: new Date().toLocaleString()
+  }
+
+  const newDoc = await addDoc(collection(db, "orders"), newOrder)
+  notifySuccess(`Your order ID is ${newDoc.id}`)
+}

@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom"
 import { Button, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react"
 import { doc, getDoc } from "firebase/firestore"
 import { ToastContainer } from 'react-toastify'
-import "react-toastify/dist/ReactToastify.css"
 import { MdAdd, MdOutlineShoppingCart, MdRemove } from 'react-icons/md'
 
 import { db } from "../firebase/client"

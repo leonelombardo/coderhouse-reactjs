@@ -1,22 +1,20 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { Flex, Text, FormControl, FormLabel, FormErrorMessage, Input, Button } from '@chakra-ui/react'
-import { doc, getDoc, updateDoc, collection, addDoc } from "firebase/firestore";
+
 import { ToastContainer } from 'react-toastify'
 
 import { Context } from '../context'
-import { db } from '../firebase/client'
+import { updateStock, createNewOrder } from '../firebase/client'
 
 import { Wrapper } from '../components/Wrapper'
 import { Title } from "../components/Title"
 import { CartCard } from '../components/CartCard'
 import { formatPrice } from '../services/formatPrice'
-
-import { notifyError, notifySuccess } from '../services/notifications'
+import { notifyError } from '../services/notifications'
 
 export const Cart = () => {
     const context = useContext(Context)
     const { cart, setCart } = context
-    const [items, setItems] = useState([])
     const totalPrice = cart.length ? cart.reduce((total, product) => total + (product.price * product.quantity), 0) : cart
 
     const [name, setName] = useState("")
@@ -26,6 +24,8 @@ export const Cart = () => {
     const [invalidName, setInvalidName] = useState(true)
     const [invalidPhone, setInvalidPhone] = useState(true)
     const [invalidEmail, setInvalidEmail] = useState(true)
+
+    const [confirmPurchase, setConfirmPurchase] = useState(false)
 
     const phoneRegex = /^[0-9]{10}$/g
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
@@ -66,23 +66,20 @@ export const Cart = () => {
 
     const handleForm = async (event) => {
         event.preventDefault()
+
         try{
-            setCart(async (product) => {
+            setCart(async (previous) => {
                 try{
-                    console.log(product)
-                    const docRef = doc(db, product.category, product.id)
-                    const docSnap = await getDoc(docRef)
-                    const { stock } = docSnap.data()
-    
-                    if(docSnap.exists()) {
-                        if(stock >= product.quantity){
-                            return product
-                        }else{
-                            return notifyError(`Product "${product.name.toUpperCase()}" is out of stock.`)
-                        }
-                    }else {
-                        return notifyError(`Product "${product.name.toUpperCase()}" is gone.`)
-                    }
+                    const filteredProducts = await previous.filter(async (product) => {
+                        return await updateStock(product)
+                    })
+
+                    console.log(filteredProducts)
+                    // if(filteredProducts){
+                    //     return createNewOrder(name, phone, email, cart)
+                    // }else{
+                    //     return
+                    // }
                 }
                 catch(error){
                     console.log(error)
@@ -118,7 +115,7 @@ export const Cart = () => {
                                         <Input type="email" onChange={handleEmail}/>
                                         { invalidEmail && <FormErrorMessage>Email is required.</FormErrorMessage>}
                                     </FormControl>
-                                    <Button type="submit" /*disabled={invalidName || invalidPhone || invalidEmail}*/>Generate order</Button>
+                                    <Button type="submit" disabled={invalidName || invalidPhone || invalidEmail}>Generate order</Button>
                                 </Flex>
                                 <Flex flexDirection="column" gap={4} minWidth={{base: "100%", md: "60%"}}>
                                     {
