@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Flex, Text, FormControl, FormLabel, FormErrorMessage, Input, Button } from '@chakra-ui/react'
 
 import { ToastContainer } from 'react-toastify'
 
 import { Context } from '../context'
-import { updateStock, createNewOrder } from '../firebase/client'
+import { checkProductStock, createNewOrder, updateStock } from '../firebase/client'
 
 import { Wrapper } from '../components/Wrapper'
 import { Title } from "../components/Title"
@@ -20,12 +20,13 @@ export const Cart = () => {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
+    const [confirmedEmail, setConfirmedEmail] = useState("")
+    const [purchasedProducts, setPurchasedProducts] = useState([])
 
     const [invalidName, setInvalidName] = useState(true)
     const [invalidPhone, setInvalidPhone] = useState(true)
     const [invalidEmail, setInvalidEmail] = useState(true)
-
-    const [confirmPurchase, setConfirmPurchase] = useState(false)
+    const [invalidConfirmedEmail, setInvalidConfirmedEmail] = useState(true)
 
     const phoneRegex = /^[0-9]{10}$/g
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
@@ -38,6 +39,29 @@ export const Cart = () => {
 
         setName(event.target.value)
         setInvalidName(false)
+    }
+    
+    const handleEmail = (event) => {
+        setEmail(event.target.value)
+        
+        if(!email || !email.match(emailRegex)){
+            setInvalidEmail(true)
+        }
+        
+        if(email.match(emailRegex)){
+            setInvalidEmail(false)
+        }
+    }
+    
+    const handleConfirmEmail = (event) => {
+        setConfirmedEmail(event.target.value)
+        
+        if(confirmedEmail.toLowerCase() === email.toLowerCase()){
+            setInvalidConfirmedEmail(false)
+        }else{
+            setInvalidConfirmedEmail(true)
+        }
+        
     }
 
     const handlePhone = (event) => {
@@ -52,44 +76,34 @@ export const Cart = () => {
         }
     }
 
-    const handleEmail = (event) => {
-        setEmail(event.target.value)
-
-        if(!email || !email.match(emailRegex)){
-            setInvalidEmail(true)
-        }
-
-        if(email.match(emailRegex)){
-            setInvalidEmail(false)
-        }
-    }
-
     const handleForm = async (event) => {
         event.preventDefault()
 
-        try{
-            setCart(async (previous) => {
-                try{
-                    const filteredProducts = await previous.filter(async (product) => {
-                        return await updateStock(product)
-                    })
+        const data = await checkProductStock(cart)
+        const [products, errors] = data
 
-                    console.log(filteredProducts)
-                    // if(filteredProducts){
-                    //     return createNewOrder(name, phone, email, cart)
-                    // }else{
-                    //     return
-                    // }
-                }
-                catch(error){
-                    console.log(error)
-                }
-            })
-        }
-        catch(error){
-            console.log(error)
-        }
+        setCart(previous => previous.reduce((arr, product) => {
+            const availableStock = products.find(item => item.id === product.id )
+        
+            if(availableStock){
+                console.log(name, email, phone, purchasedProducts)
+                updateStock(product)
+                setPurchasedProducts(previous => [...previous, product])
+                return arr
+            }else{
+                return [...arr, product]
+            }
+        }, []))
+
+        errors.forEach(error => notifyError(error))
     }
+    
+
+    useEffect(()=> {
+        if(purchasedProducts.length){
+            createNewOrder(name, email, phone, purchasedProducts)
+        }
+    }, [purchasedProducts])
 
     return (
         <>
@@ -102,20 +116,25 @@ export const Cart = () => {
                                 <Flex as="form" onSubmit={handleForm} display="flex" flexDirection="column" gap={8} minWidth={{base: "100%", md: "40%"}}>
                                     <FormControl isInvalid={invalidName}>
                                         <FormLabel>Name</FormLabel>
-                                        <Input type="text" onChange={handleName}/>
+                                        <Input type="text" value={name} onChange={handleName}/>
                                         { invalidName && <FormErrorMessage>Name is required.</FormErrorMessage> }
-                                    </FormControl>
-                                    <FormControl isInvalid={invalidPhone}>
-                                        <FormLabel>Phone</FormLabel>
-                                        <Input type="number" onChange={handlePhone}/>
-                                        { invalidPhone && <FormErrorMessage>Phone is required.</FormErrorMessage>}
                                     </FormControl>
                                     <FormControl isInvalid={invalidEmail}>
                                         <FormLabel>Email</FormLabel>
-                                        <Input type="email" onChange={handleEmail}/>
+                                        <Input type="email" value={email} onChange={handleEmail}/>
                                         { invalidEmail && <FormErrorMessage>Email is required.</FormErrorMessage>}
                                     </FormControl>
-                                    <Button type="submit" disabled={invalidName || invalidPhone || invalidEmail}>Generate order</Button>
+                                    <FormControl isInvalid={invalidConfirmedEmail}>
+                                        <FormLabel>Confirm email</FormLabel>
+                                        <Input type="email" value={confirmedEmail} onChange={handleConfirmEmail}/>
+                                        { invalidConfirmedEmail && <FormErrorMessage>Email doesn't match.</FormErrorMessage>}
+                                    </FormControl>
+                                    <FormControl isInvalid={invalidPhone}>
+                                        <FormLabel>Phone</FormLabel>
+                                        <Input type="number" value={phone} onChange={handlePhone}/>
+                                        { invalidPhone && <FormErrorMessage>Phone is required.</FormErrorMessage>}
+                                    </FormControl>
+                                    <Button type="submit" disabled={invalidName || invalidPhone || invalidEmail || invalidConfirmedEmail}>Generate order</Button>
                                 </Flex>
                                 <Flex flexDirection="column" gap={4} minWidth={{base: "100%", md: "60%"}}>
                                     {

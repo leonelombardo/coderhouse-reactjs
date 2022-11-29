@@ -47,6 +47,11 @@ export const Navbar = () => {
                             <Text fontWeight={700}>Clothing</Text>
                         </Link>
                     </Flex>
+                    <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2} fontSize={{base: 32, md: 20}}>
+                        <Link to="/orders" onClick={hideNavbar}>
+                            <Text fontWeight={700}>Orders</Text>
+                        </Link>
+                    </Flex>
                     <Link to="/checkout" onClick={hideNavbar}>
                         <Flex as={motion.li} whileHover={{scale: 1.1}} alignItems="center" gap={2}>
                             <CartWidget/>

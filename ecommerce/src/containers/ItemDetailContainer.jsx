@@ -23,7 +23,7 @@ export const ItemDetailContainer = () => {
 
     const context = useContext(Context)
     const { cart, setCart } = context
-    
+
     const params = useParams()
     const { category, productId } = params
 

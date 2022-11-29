@@ -1,7 +1,6 @@
 import { Grid, Text } from '@chakra-ui/react'
 
 import { ItemCard } from './ItemCard'
-import { Wrapper } from './Wrapper'
 import { Title } from "./Title"
 
 export const ItemList = ({category, products}) => {

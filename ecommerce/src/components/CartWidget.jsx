@@ -5,8 +5,7 @@ import { MdOutlineShoppingCart } from 'react-icons/md'
 import { Context } from "../context"
 
 export const CartWidget = () => {
-    const context = useContext(Context)
-    const { cart } = context    
+    const { cart }= useContext(Context)
 
     return (
         <Button variant="unstyled" fontSize={{base: 40, md: 28}}>

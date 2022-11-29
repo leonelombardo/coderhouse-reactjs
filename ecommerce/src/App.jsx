@@ -16,10 +16,6 @@ export const App = () => {
     setCart
   }
 
-  useEffect(()=> {
-    // console.log(cart)
-  }, [cart])
-
   return (
     <Context.Provider value={globalContext}>
       <ChakraProvider theme={theme}>

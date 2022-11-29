@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { Container, Heading } from "@chakra-ui/react"
+import { Heading } from "@chakra-ui/react"
 import { collection, query, getDocs } from "firebase/firestore"
 
 import { db } from "../firebase/client"
@@ -9,7 +9,7 @@ import { ItemList } from "../components/ItemList"
 import { Wrapper } from "../components/Wrapper"
 import { Spinner } from "../components/Spinner"
 
-export const ItemListContainer = ({greeting}) => {
+export const ItemListContainer = () => {
     const [products, setProducts] = useState([])
     const { categoryId } = useParams()
     const [isLoading, setIsLoading] = useState(true)

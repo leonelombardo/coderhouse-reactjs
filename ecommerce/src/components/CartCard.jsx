@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { Box, Button, Flex, Heading, Icon, Image, Text } from '@chakra-ui/react'
 
 import { formatPrice } from '../services/formatPrice'

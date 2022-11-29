@@ -6,6 +6,7 @@ import { ItemDetailContainer } from './containers/ItemDetailContainer'
 import { Error404 } from './containers/Error404'
 import { Home } from './pages/Home'
 import { Cart } from './pages/Cart'
+import { Orders } from './pages/Orders'
 
 export const AnimatedRoutes = () => {
     const location = useLocation()
@@ -18,6 +19,7 @@ export const AnimatedRoutes = () => {
                     <Route exact path="/category" element={<ItemListContainer/>}/>
                     <Route exact path="/category/:categoryId" element={<ItemListContainer/>}/>
                     <Route path="/product/:category/:productId" element={<ItemDetailContainer/>}/>
+                    <Route path="/orders" element={<Orders/>}/>
                     <Route path="/checkout" element={<Cart/>}/>
                     <Route path="/404" element={<Error404/>}/>
                     <Route path="*" element={<Error404/>}/>
