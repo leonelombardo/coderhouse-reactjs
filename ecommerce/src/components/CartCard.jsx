@@ -5,6 +5,7 @@ import { formatPrice } from '../services/formatPrice'
 import { Context } from "../context"
 
 import { MdAdd, MdRemove } from "react-icons/md"
+import { Link } from "react-router-dom"
 
 export const CartCard = ({product}) => {
     const context = useContext(Context)
@@ -36,9 +37,13 @@ export const CartCard = ({product}) => {
             <Box as="div" key={product.id} backgroundColor="secondary.500" borderBottom="2px" borderColor="#efefef" maxWidth="100%" paddingBottom={4}>
                 <Flex gap={8} justifyContent="space-between" alignItems="center">
                     <Flex gap={8} alignItems="center">
-                        <Image src={product.image} width={50} height={50} objectFit="cover" objectPosition="center" borderRadius={6}/>
+                        <Link to={`/product/${product.category}/${product.id}`}>
+                            <Image src={product.image} width={50} height={50} objectFit="cover" objectPosition="center" borderRadius={6}/>
+                        </Link>
                         <Flex flexDirection="column" gap={2}>
-                            <Heading as="h2" fontSize={12}>{product.name.toUpperCase()}</Heading>
+                            <Link to={`/product/${product.category}/${product.id}`}>
+                                <Heading as="h2" fontSize={12}>{product.name.toUpperCase()}</Heading>
+                            </Link>
                             <Text as="span" fontSize={12}>{formatPrice(product.price)}</Text>
                             <Text as="span" fontSize={12}>Stock: {product.stock}</Text>
                         </Flex>

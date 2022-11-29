@@ -77,12 +77,12 @@ export const updateStock = async (product) => {
   await updateDoc(productRef, { stock: productData.data().stock - quantity })
 }
 
-export const createNewOrder = async (name, phone, email, cart) => {
+export const createNewOrder = async (name, email, phone, cart) => {
   const newOrder = {
     buyer: {
         name,
-        phone,
-        email
+        email,
+        phone
     },
     products: cart,
     createdAt: new Date().toLocaleString()

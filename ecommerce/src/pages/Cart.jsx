@@ -97,6 +97,10 @@ export const Cart = () => {
 
         errors.forEach(error => notifyError(error))
     }
+
+    const handleClearAll = () => {
+        setCart([])
+    }
     
 
     useEffect(()=> {
@@ -137,6 +141,7 @@ export const Cart = () => {
                                     <Button type="submit" disabled={invalidName || invalidPhone || invalidEmail || invalidConfirmedEmail}>Generate order</Button>
                                 </Flex>
                                 <Flex flexDirection="column" gap={4} minWidth={{base: "100%", md: "60%"}}>
+                                    <Button type="button" width="fit-content" onClick={handleClearAll} alignSelf="flex-end" size="xs" marginBottom={4}>Clear all</Button>
                                     {
                                     cart.map(product => <CartCard key={product.id} product={product}/>)
                                     }
