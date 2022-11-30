@@ -12,7 +12,7 @@ import { formatPrice } from '../services/formatPrice'
 
 import { Wrapper } from '../components/Wrapper'
 import { Title } from "../components/Title"
-import { CartCard } from '../components/CartCard'
+import { CartCard } from "../components/CartCard"
 
 export const Cart = () => {
     const context = useContext(Context)
