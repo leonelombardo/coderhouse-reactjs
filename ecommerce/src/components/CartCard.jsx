@@ -1,11 +1,10 @@
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
+import { Link } from "react-router-dom"
 import { Box, Button, Flex, Heading, Icon, Image, Text } from '@chakra-ui/react'
+import { MdAdd, MdRemove } from "react-icons/md"
 
 import { formatPrice } from '../services/formatPrice'
 import { Context } from "../context"
-
-import { MdAdd, MdRemove } from "react-icons/md"
-import { Link } from "react-router-dom"
 
 export const CartCard = ({product}) => {
     const context = useContext(Context)

@@ -5,16 +5,14 @@ import { doc, getDoc } from "firebase/firestore"
 import { ToastContainer } from 'react-toastify'
 import { MdAdd, MdOutlineShoppingCart, MdRemove } from 'react-icons/md'
 
-
 import { db } from "../firebase/client"
 import { Context } from "../context"
+import { notifyError, notifySuccess } from "../services/notifications"
+import { formatPrice } from "../services/formatPrice"
 
 import { Wrapper } from "../components/Wrapper"
 import { Error404 } from "./Error404"
 import { Spinner } from "../components/Spinner"
-
-import { notifyError, notifySuccess } from "../services/notifications"
-import { formatPrice } from "../services/formatPrice"
 
 export const ItemDetailContainer = () => {
     const [product, setProduct] = useState("")
@@ -31,6 +29,7 @@ export const ItemDetailContainer = () => {
 
     const getProduct = async (category, id) => {
         try{
+            setIsLoading(true)
             const docRef = doc(db, category, id);
             const docSnap = await getDoc(docRef);
     
@@ -40,9 +39,11 @@ export const ItemDetailContainer = () => {
                 notifyError(`Product "${product.name.toUpperCase()}" is gone.`)
             }
 
-            setIsLoading(false)
         }catch(error){
-            console.log(error)
+            notifyError(error)
+        }
+        finally{
+            setIsLoading(false)
         }
     }
     
@@ -71,7 +72,7 @@ export const ItemDetailContainer = () => {
 
     const addToCart = (id) => {
         if(!productQuantity){
-            return notifyError("Please select a valid quantity before adding a product.")
+            return notifyError("Please add at least one product before adding it to the cart.")
         }
 
         setCart(previous => {

@@ -1,5 +1,5 @@
-import { GridItem, Flex, Image, Heading, Text } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { GridItem, Flex, Image, Heading, Text } from '@chakra-ui/react'
 
 import { formatPrice } from '../services/formatPrice'
 

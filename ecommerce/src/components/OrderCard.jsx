@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom"
+import { useState } from "react"
 import { Button, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react"
 import { AnimatePresence, motion } from "framer-motion"
-import { useState } from "react"
 import { BiChevronDown, BiPhone, BiUser } from "react-icons/bi"
 import { HiOutlineCalendar, HiOutlineMail, HiOutlineTicket } from "react-icons/hi"
-import { Link } from "react-router-dom"
+
 import { formatPrice } from "../services/formatPrice"
 
 export const OrderCard = ({name, email, phone, products, date, id}) => {

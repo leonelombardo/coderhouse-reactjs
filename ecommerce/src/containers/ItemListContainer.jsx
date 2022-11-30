@@ -4,6 +4,7 @@ import { Heading } from "@chakra-ui/react"
 import { collection, query, getDocs } from "firebase/firestore"
 
 import { db } from "../firebase/client"
+import { notifyError } from "../services/notifications"
 
 import { ItemList } from "../components/ItemList"
 import { Wrapper } from "../components/Wrapper"
@@ -15,18 +16,19 @@ export const ItemListContainer = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     const getSkateboards = async (category) => {
-        if(!category){
-            return
-        }
-
-        const q = query(collection(db, category));
-
+        if(!category) return
+        if(products.length) return
+        
         try{
+            setIsLoading(true)
+            const q = query(collection(db, category));
             const querySnapshot = await getDocs(q)
             querySnapshot.forEach(doc => setProducts(previous => [...previous, {id: doc.id, ...doc.data()}]))
-            setIsLoading(false)
         }catch(error){
-            console.log(error)
+            notifyError(error)
+        }
+        finally{
+            setIsLoading(false)
         }
     }
 

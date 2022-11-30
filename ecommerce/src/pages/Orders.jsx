@@ -1,34 +1,37 @@
 import { useState, useEffect } from "react"
+import { Grid, Text } from "@chakra-ui/react"
+
 import { getAllDocuments } from "../firebase/client"
+import { notifyError } from "../services/notifications"
 
 import { Wrapper } from "../components/Wrapper"
-import { Flex, Grid, Spinner, Text } from "@chakra-ui/react"
-
 import { Title } from "../components/Title"
 import { OrderCard } from "../components/OrderCard"
-import { notifyError } from "../services/notifications"
+import { Spinner } from "../components/Spinner"
 
 export const Orders = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [orders, setOrders] = useState([])
     
     useEffect(()=> {
-        (async()=> {
-            setIsLoading(true)
-            try{
-                const response = await getAllDocuments("orders")
-                
-                response.forEach(document => {
-                    setOrders(previous => [...previous, { id: document.id, ...document.data() }])
-                })
-            }
-            catch(error){
-                notifyError(error)
-            }            
-            finally{
-                setIsLoading(false)
-            }
-        })()
+        if(!orders.length){
+            (async()=> {
+                setIsLoading(true)
+                try{
+                    const response = await getAllDocuments("orders")
+                    
+                    response.forEach(document => {
+                        setOrders(previous => [...previous, { id: document.id, ...document.data() }])
+                    })
+                }
+                catch(error){
+                    notifyError(error)
+                }            
+                finally{
+                    setIsLoading(false)
+                }
+            })()
+        }
     }, [])
 
     if(isLoading){

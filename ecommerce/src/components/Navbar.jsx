@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { Container, Box, Flex, Text, Button } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-
 import { CgMenuRightAlt, CgClose } from 'react-icons/cg'
+
 import { CartWidget } from './CartWidget'
 
 export const Navbar = () => {

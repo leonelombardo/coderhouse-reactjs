@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { Button, Flex, Text } from "@chakra-ui/react"
-
 import { MdOutlineShoppingCart } from 'react-icons/md'
+
 import { Context } from "../context"
 
 export const CartWidget = () => {

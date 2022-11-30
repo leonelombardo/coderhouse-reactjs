@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Flex, Text, FormControl, FormLabel, FormErrorMessage, Input, Button } from '@chakra-ui/react'
 import { ToastContainer } from 'react-toastify'
+import { TbSkateboard } from "react-icons/tb"
+import { IoShirtOutline } from "react-icons/io5"
 
 import { Context } from '../context'
 import { checkProductStock, createNewOrder, updateStock } from '../firebase/client'
@@ -11,9 +13,6 @@ import { formatPrice } from '../services/formatPrice'
 import { Wrapper } from '../components/Wrapper'
 import { Title } from "../components/Title"
 import { CartCard } from '../components/CartCard'
-
-import { TbSkateboard } from "react-icons/tb"
-import { IoShirtOutline } from "react-icons/io5"
 
 export const Cart = () => {
     const context = useContext(Context)
@@ -82,22 +81,27 @@ export const Cart = () => {
     const handleForm = async (event) => {
         event.preventDefault()
 
-        const data = await checkProductStock(cart)
-        const [products, errors] = data
-
-        setCart(previous => previous.reduce((arr, product) => {
-            const availableStock = products.find(item => item.id === product.id )
-        
-            if(availableStock){
-                updateStock(product)
-                setPurchasedProducts(previous => [...previous, product])
-                return arr
-            }else{
-                return [...arr, product]
-            }
-        }, []))
-
-        errors.forEach(error => notifyError(error))
+        try{
+            const data = await checkProductStock(cart)
+            const [products, errors] = data
+    
+            setCart(previous => previous.reduce((arr, product) => {
+                const availableStock = products.find(item => item.id === product.id )
+            
+                if(availableStock){
+                    updateStock(product)
+                    setPurchasedProducts(previous => [...previous, product])
+                    return arr
+                }else{
+                    return [...arr, product]
+                }
+            }, []))
+    
+            errors.forEach(error => notifyError(error))
+        }
+        catch(error){
+            notifyError(error)
+        }
     }
 
     useEffect(()=> {

@@ -1,5 +1,6 @@
 import { Icon } from '@chakra-ui/react'
 import { RiLoader4Fill } from 'react-icons/ri'
+
 import { Wrapper } from './Wrapper'
 
 export const Spinner = () => {
