@@ -59,11 +59,15 @@ export const Navbar = () => {
                     </Link>
                 </Flex>
             </Container>
-            <Box as={motion.button} {...togglerVariants} whileTap={{scale: 0.5}} position="fixed" right={5} top={5} fontSize={32} display={{base: "flex", md: "none"}}>
+            <Box position="fixed" left={0} top={0}display={{base: "flex", md: "none"}} width="100%" backgroundColor="secondary.500" height="80px" boxShadow={isNavToggled ? "" : "0px 0px 20px #00000010"}>
                 {
                     isNavToggled
-                        ? <CgClose onClick={() => setIsNavToggled(false)}/>
-                        : <CgMenuRightAlt onClick={() => setIsNavToggled(true)}/>
+                        ? <Button variant="unstyled" onClick={() => setIsNavToggled(false)} as={motion.button} {...togglerVariants} whileTap={{scale: 0.5}} fontSize={32} position="fixed" right={5} top={5}>
+                            <CgClose/>
+                        </Button>   
+                        : <Button variant="unstyled" onClick={() => setIsNavToggled(true)} as={motion.button} {...togglerVariants} whileTap={{scale: 0.5}} fontSize={32} position="fixed" right={5} top={5}>
+                            <CgMenuRightAlt/>
+                        </Button>
                 }
             </Box>
         </Container>

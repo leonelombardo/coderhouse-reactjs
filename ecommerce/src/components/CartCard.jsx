@@ -38,14 +38,19 @@ export const CartCard = ({product}) => {
                 <Flex gap={8} justifyContent="space-between" alignItems="center">
                     <Flex gap={8} alignItems="center">
                         <Link to={`/product/${product.category}/${product.id}`}>
-                            <Image src={product.image} width={50} height={50} objectFit="cover" objectPosition="center" borderRadius={6}/>
+                            <Image src={product.image} minWidth={25} width={50} height={50} objectFit="cover" objectPosition="center" borderRadius={6}/>
                         </Link>
                         <Flex flexDirection="column" gap={2}>
                             <Link to={`/product/${product.category}/${product.id}`}>
                                 <Heading as="h2" fontSize={12}>{product.name.toUpperCase()}</Heading>
                             </Link>
                             <Text as="span" fontSize={12}>{formatPrice(product.price)}</Text>
-                            <Text as="span" fontSize={12}>Stock: {product.stock}</Text>
+                            {
+                                product.stock
+                                    ? <Text as="span" fontSize={10} color="secondary.500" backgroundColor="primary.500" width="fit-content" padding={1} borderRadius={4}>STOCK: {product.stock}</Text>
+                                    : <Text as="span" fontSize={10} color="secondary.500" backgroundColor="red.500" width="fit-content" padding={1} borderRadius={4}>NO STOCK</Text>
+                                    
+                            }
                         </Flex>
                     </Flex>
                     <Flex gap={2} alignItems="center">

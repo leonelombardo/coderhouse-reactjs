@@ -1,16 +1,19 @@
 import { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Flex, Text, FormControl, FormLabel, FormErrorMessage, Input, Button } from '@chakra-ui/react'
-
 import { ToastContainer } from 'react-toastify'
 
 import { Context } from '../context'
 import { checkProductStock, createNewOrder, updateStock } from '../firebase/client'
+import { notifyError } from '../services/notifications'
+import { formatPrice } from '../services/formatPrice'
 
 import { Wrapper } from '../components/Wrapper'
 import { Title } from "../components/Title"
 import { CartCard } from '../components/CartCard'
-import { formatPrice } from '../services/formatPrice'
-import { notifyError } from '../services/notifications'
+
+import { TbSkateboard } from "react-icons/tb"
+import { IoShirtOutline } from "react-icons/io5"
 
 export const Cart = () => {
     const context = useContext(Context)
@@ -32,34 +35,34 @@ export const Cart = () => {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g
 
     const handleName = (event) => {
-        if(!event.target.value){
-            setInvalidName(true)
-            return
+        setName(event.target.value)
+        
+        if(event.target.value === ""){
+            return  setInvalidName(true)
         }
 
-        setName(event.target.value)
         setInvalidName(false)
     }
     
     const handleEmail = (event) => {
         setEmail(event.target.value)
         
-        if(!email || !email.match(emailRegex)){
-            setInvalidEmail(true)
+        if(!event.target.value || !event.target.value.match(emailRegex)){
+            return setInvalidEmail(true)
         }
         
-        if(email.match(emailRegex)){
-            setInvalidEmail(false)
+        if(event.target.value.match(emailRegex)){
+            return setInvalidEmail(false)
         }
     }
     
     const handleConfirmEmail = (event) => {
         setConfirmedEmail(event.target.value)
         
-        if(confirmedEmail.toLowerCase() === email.toLowerCase()){
-            setInvalidConfirmedEmail(false)
+        if(event.target.value.toLowerCase() === email.toLowerCase()){
+            return setInvalidConfirmedEmail(false)
         }else{
-            setInvalidConfirmedEmail(true)
+            return setInvalidConfirmedEmail(true)
         }
         
     }
@@ -67,12 +70,12 @@ export const Cart = () => {
     const handlePhone = (event) => {
         setPhone(event.target.value)
 
-        if(!phone || !phone.match(phoneRegex)){
-            setInvalidPhone(true)
+        if(!event.target.value || !event.target.value.match(phoneRegex)){
+            return setInvalidPhone(true)
         }
 
-        if(phone.match(phoneRegex)){
-            setInvalidPhone(false)
+        if(event.target.value.match(phoneRegex)){
+            return setInvalidPhone(false)
         }
     }
 
@@ -86,7 +89,6 @@ export const Cart = () => {
             const availableStock = products.find(item => item.id === product.id )
         
             if(availableStock){
-                console.log(name, email, phone, purchasedProducts)
                 updateStock(product)
                 setPurchasedProducts(previous => [...previous, product])
                 return arr
@@ -98,16 +100,19 @@ export const Cart = () => {
         errors.forEach(error => notifyError(error))
     }
 
-    const handleClearAll = () => {
-        setCart([])
-    }
-    
-
     useEffect(()=> {
         if(purchasedProducts.length){
             createNewOrder(name, email, phone, purchasedProducts)
+
+            setPurchasedProducts([])
         }
     }, [purchasedProducts])
+
+    useEffect(()=> {
+        if(email !== confirmedEmail) return setInvalidConfirmedEmail(true)
+        
+        return setInvalidConfirmedEmail(false)
+    }, [email])
 
     return (
         <>
@@ -116,7 +121,7 @@ export const Cart = () => {
                 {
                     cart.length
                         ? <>
-                            <Flex gap={16} flexDirection={{base: "column", md: "row"}} justifyContent="space-between" width="100%" padding={4}>
+                            <Flex gap={16} flexDirection={{base: "column-reverse", md: "row"}} justifyContent="space-between" width="100%" padding={4}>
                                 <Flex as="form" onSubmit={handleForm} display="flex" flexDirection="column" gap={8} minWidth={{base: "100%", md: "40%"}}>
                                     <FormControl isInvalid={invalidName}>
                                         <FormLabel>Name</FormLabel>
@@ -138,10 +143,10 @@ export const Cart = () => {
                                         <Input type="number" value={phone} onChange={handlePhone}/>
                                         { invalidPhone && <FormErrorMessage>Phone is required.</FormErrorMessage>}
                                     </FormControl>
-                                    <Button type="submit" disabled={invalidName || invalidPhone || invalidEmail || invalidConfirmedEmail}>Generate order</Button>
+                                    <Button type="submit" disabled={invalidName || invalidPhone || invalidEmail || invalidConfirmedEmail || (email !== confirmedEmail)}>Generate order</Button>
                                 </Flex>
                                 <Flex flexDirection="column" gap={4} minWidth={{base: "100%", md: "60%"}}>
-                                    <Button type="button" width="fit-content" onClick={handleClearAll} alignSelf="flex-end" size="xs" marginBottom={4}>Clear all</Button>
+                                    <Button type="button" width="fit-content" onClick={()=> setCart([])} alignSelf="flex-end" size="xs" marginBottom={4}>Clear all</Button>
                                     {
                                     cart.map(product => <CartCard key={product.id} product={product}/>)
                                     }
@@ -149,7 +154,17 @@ export const Cart = () => {
                                 </Flex>
                             </Flex>
                         </>
-                        : <Text as="span" color="#9a9a9a">There are no products.</Text>
+                        : <>
+                            <Text as="span" color="#9a9a9a">There are no products.</Text>
+                            <Flex flexDirection="column" alignItems="center">
+                                <Link to="/category/skateboards">
+                                    <Button variant="unstyled" leftIcon={<TbSkateboard/>} fontWeight={700} display="flex" alignItems="center" _hover={{textDecoration: "underline"}}>Skateboards</Button>
+                                </Link>
+                                <Link to="/category/clothing">
+                                    <Button variant="unstyled" leftIcon={<IoShirtOutline/>} fontWeight={700} display="flex" alignItems="center" _hover={{textDecoration: "underline"}}>Clothing</Button>
+                                </Link>
+                            </Flex>
+                        </> 
                     }
             </Wrapper>
             <ToastContainer/>

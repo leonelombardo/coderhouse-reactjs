@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { Button, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react"
 import { doc, getDoc } from "firebase/firestore"
 import { ToastContainer } from 'react-toastify'
 import { MdAdd, MdOutlineShoppingCart, MdRemove } from 'react-icons/md'
+
 
 import { db } from "../firebase/client"
 import { Context } from "../context"
@@ -20,6 +21,7 @@ export const ItemDetailContainer = () => {
     const [productQuantity, setProductQuantity] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
     const [isOutOfStock, setIsOutOfStock] = useState(false)
+    const [isAdded, setIsAdded] = useState(false)
 
     const context = useContext(Context)
     const { cart, setCart } = context
@@ -92,6 +94,8 @@ export const ItemDetailContainer = () => {
             }
         })
 
+        setIsAdded(true)
+
         return notifySuccess(`Product added successfully.`)
     }
 
@@ -115,20 +119,41 @@ export const ItemDetailContainer = () => {
                                 <Flex flexDirection="column" justifyContent="space-between" alignItems="center" gap={16} maxWidth={{base: 350, md: 500}}>
                                     <Flex flexDirection="column" gap={2}>
                                         <Heading as="h1" fontSize={32} fontWeight={1000}>{product?.name?.toUpperCase()}</Heading>
-                                        <Text as="span" fontSize={14}>Stock: {product.stock}</Text>
-                                        <Text as="span" fontSize={24}>{formatPrice(product?.price)}</Text>
+                                        {
+                                            product.stock
+                                                ? <Text as="span" fontSize={14} color="secondary.500" backgroundColor="primary.500" width="fit-content" padding={1} borderRadius={4}>STOCK: {product.stock}</Text>
+                                                : <Text as="span" fontSize={14} color="secondary.500" backgroundColor="red.500" width="fit-content" padding={1} borderRadius={4}>NO STOCK</Text>
+                                                
+                                        }
+                                        {
+                                            product.stock
+                                                ? <Text as="span" fontSize={24}>{formatPrice(product?.price)}</Text>
+                                                : ""
+                                        }
                                     </Flex>
-                                    <Flex flexDirection="column" gap={4} maxWidth={350}>
-                                        <Flex width="100%" gap={4} backgroundColor="secondary.500" zIndex="1">
-                                            <Button onClick={removeProduct} disabled={!product.stock}>
-                                                <Icon as={MdRemove}/>
-                                            </Button>
-                                            <input type="number" value={productQuantity} onChange={handleInputQuantity} readOnly style={{textAlign: "center", flex: 1, outline: "none", border: "none"}}/>
-                                            <Button onClick={addProduct} disabled={!product.stock || productQuantity >= product.stock}>
-                                                <Icon as={MdAdd}/>
-                                            </Button>
-                                        </Flex>
-                                        <Button leftIcon={<MdOutlineShoppingCart/>} onClick={() => addToCart(product.id)} disabled={!product.stock}>Add to cart</Button>
+                                    <Flex flexDirection="column" gap={4} maxWidth={350} width="100%">
+                                        {
+                                            isAdded
+                                                ? <>
+                                                    <Link to="/checkout">
+                                                        <Button width="100%" leftIcon={<MdOutlineShoppingCart/>}>Go to cart</Button>
+                                                    </Link>
+                                                </>
+                                                : product.stock
+                                                    ? <>
+                                                        <Flex width="100%" gap={4} justifyContent="space-between" alignItems="center" backgroundColor="secondary.500" zIndex="1">
+                                                            <Button onClick={removeProduct} disabled={!product.stock}>
+                                                                <Icon as={MdRemove}/>
+                                                            </Button>
+                                                            <input type="number" value={productQuantity} onChange={handleInputQuantity} readOnly style={{textAlign: "center", flex: 1, outline: "none", border: "none"}}/>
+                                                            <Button onClick={addProduct} disabled={!product.stock || productQuantity >= product.stock}>
+                                                                <Icon as={MdAdd}/>
+                                                            </Button>
+                                                        </Flex>
+                                                        <Button leftIcon={<MdOutlineShoppingCart/>} onClick={() => addToCart(product.id)} disabled={!product.stock}>Add to cart</Button>
+                                                    </>
+                                                    : ""
+                                        }
                                     </Flex>
                                 </Flex>
                             </Flex>

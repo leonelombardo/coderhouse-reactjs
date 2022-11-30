@@ -11,9 +11,15 @@ export const ItemList = ({category, products}) => {
                     products?.length
                         ? <Grid templateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={8} width="100%">
                             {
-                            products.map(product => (
-                                <ItemCard key={product.id} product={product} category={category}/>
-                            ))
+                                products
+                                    .sort((a, b) => {
+                                        if(a.stock > b.stock) return -1
+                                        if(a.stock < b.stock) return 1
+                                        return 0
+                                    })
+                                    .map(product => (
+                                    <ItemCard key={product.id} product={product} category={category}/>
+                                    ))
                             }
                         </Grid>
                         : <Text as="span" width="100%" textAlign="center" color="gray.400">There are no products</Text>

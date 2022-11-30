@@ -1,7 +1,7 @@
 import { Button, Flex, Heading, Icon, Image, Text } from "@chakra-ui/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { useState } from "react"
-import { BiChevronDown, BiChevronUp, BiPhone, BiUser } from "react-icons/bi"
+import { BiChevronDown, BiPhone, BiUser } from "react-icons/bi"
 import { HiOutlineCalendar, HiOutlineMail, HiOutlineTicket } from "react-icons/hi"
 import { Link } from "react-router-dom"
 import { formatPrice } from "../services/formatPrice"
@@ -31,7 +31,7 @@ export const OrderCard = ({name, email, phone, products, date, id}) => {
                 <Flex flexDirection="column" gap={4}>
                     <Flex gap={2} alignItems="center">
                         <Icon as={BiUser}/>
-                        <Text as="h2" fontSize={14}>{name.charAt(0).toUpperCase().concat(name.slice(1))}</Text>
+                        <Text as="h2" fontSize={14}>{name.charAt(0).toUpperCase().concat(name.slice(1).toLowerCase())}</Text>
                     </Flex>
                     <Flex gap={2} alignItems="center">
                         <Icon as={HiOutlineMail}/>
@@ -58,22 +58,20 @@ export const OrderCard = ({name, email, phone, products, date, id}) => {
                         <Flex flexDirection="column" gap={4} position="absolute" top="95%" left="0%" backgroundColor="#f9f9f9" padding={8} zIndex={999} boxShadow="0px 6px 0px #00000015" borderRadius="0 0 12px 12px">
                             {
                                 products.map(product => (
-                                    <>
-                                        <AnimatePresence mode="wait">
-                                            <Flex as={motion.div} {...showProductsVariants} gap={4} alignItems="center" paddingBottom={4} borderBottom="2px" borderColor="#efefef">
-                                                <Link to={`/product/${product.category}/${product.id}`}>
-                                                    <Image src={product.image} maxWidth={50} maxHeight={50} backgroundColor="#fff" borderRadius={6}/>
-                                                </Link>
-                                                <Link to={`/product/${product.category}/${product.id}`}>
-                                                    <Heading as="h2" fontSize={12}>{product.name.toUpperCase()}</Heading>
-                                                </Link>
-                                                <Flex flexDirection="column" gap={2} minWidth="fit-content">
-                                                    <Text as="h2" fontSize={12} textAlign="right" paddingBottom={2} borderBottom="2px" borderColor="#efefef">{product.quantity} x {formatPrice(product.price)}</Text>
-                                                    <Text as="h2" fontSize={12} textAlign="right">{formatPrice(product.price * product.quantity)}</Text>
-                                                </Flex>
+                                    <AnimatePresence mode="wait" key={product.id}>
+                                        <Flex as={motion.div} {...showProductsVariants} gap={4} alignItems="center" paddingBottom={4} borderBottom="2px" borderColor="#efefef">
+                                            <Link to={`/product/${product.category}/${product.id}`}>
+                                                <Image src={product.image} maxWidth={50} maxHeight={50} backgroundColor="#fff" borderRadius={6}/>
+                                            </Link>
+                                            <Link to={`/product/${product.category}/${product.id}`}>
+                                                <Heading as="h2" fontSize={12}>{product.name.toUpperCase()}</Heading>
+                                            </Link>
+                                            <Flex flexDirection="column" gap={2} minWidth="fit-content">
+                                                <Text as="h2" fontSize={12} textAlign="right" paddingBottom={2} borderBottom="2px" borderColor="#efefef">{product.quantity} x {formatPrice(product.price)}</Text>
+                                                <Text as="h2" fontSize={12} textAlign="right">{formatPrice(product.price * product.quantity)}</Text>
                                             </Flex>
-                                        </AnimatePresence>
-                                    </>
+                                        </Flex>
+                                    </AnimatePresence>
                                 ))
                             }
                             <Text textAlign="right" fontSize={14} color="green.500">{formatPrice(products.reduce((total, product) => total + (product.price * product.quantity), 0))}</Text>

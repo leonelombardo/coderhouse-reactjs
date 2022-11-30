@@ -12,7 +12,7 @@ export const CartWidget = () => {
             <MdOutlineShoppingCart/>
             {
                 cart.length
-                    ? <Flex justifyContent="center" alignItems="center" position="absolute" top={0} right="8px" backgroundColor="red.500" width={18} height={18} borderRadius="50%">
+                    ? <Flex justifyContent="center" alignItems="center" position="absolute" top={0} right={{base: 0, md: "8px"}} backgroundColor="red.500" width={18} height={18} borderRadius="50%">
                         <Text textAlign="center" color="secondary.500" fontSize={12}>{cart.reduce((total, product) => total + product.quantity, 0)}</Text>
                     </Flex>
                     : <></> 

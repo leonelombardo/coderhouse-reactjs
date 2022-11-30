@@ -85,7 +85,7 @@ export const createNewOrder = async (name, email, phone, cart) => {
         phone
     },
     products: cart,
-    createdAt: new Date().toLocaleString()
+    createdAt: new Date().toLocaleString("en-US")
   }
 
   const newDoc = await addDoc(collection(db, "orders"), newOrder)
