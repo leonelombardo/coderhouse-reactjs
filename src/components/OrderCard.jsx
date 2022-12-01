@@ -60,13 +60,15 @@ export const OrderCard = ({name, email, phone, products, date, id}) => {
                             {
                                 products.map(product => (
                                     <AnimatePresence mode="wait" key={product.id}>
-                                        <Flex as={motion.div} {...showProductsVariants} gap={4} alignItems="center" paddingBottom={4} borderBottom="2px" borderColor="#efefef">
-                                            <Link to={`/product/${product.category}/${product.id}`}>
-                                                <Image src={product.image} maxWidth={50} maxHeight={50} backgroundColor="#fff" borderRadius={6}/>
-                                            </Link>
-                                            <Link to={`/product/${product.category}/${product.id}`}>
-                                                <Heading as="h2" fontSize={12}>{product.name.toUpperCase()}</Heading>
-                                            </Link>
+                                        <Flex as={motion.div} {...showProductsVariants} gap={4} alignItems="center" justifyContent="space-between" paddingBottom={4} borderBottom="2px" borderColor="#efefef">
+                                            <Flex gap={4}>
+                                                <Link to={`/product/${product.category}/${product.id}`}>
+                                                    <Image src={product.image} maxWidth={50} maxHeight={50} backgroundColor="#fff" borderRadius={6}/>
+                                                </Link>
+                                                <Link to={`/product/${product.category}/${product.id}`}>
+                                                    <Heading as="h2" fontSize={12}>{product.name.toUpperCase()}</Heading>
+                                                </Link>
+                                            </Flex>
                                             <Flex flexDirection="column" gap={2} minWidth="fit-content">
                                                 <Text as="h2" fontSize={12} textAlign="right" paddingBottom={2} borderBottom="2px" borderColor="#efefef">{product.quantity} x {formatPrice(product.price)}</Text>
                                                 <Text as="h2" fontSize={12} textAlign="right">{formatPrice(product.price * product.quantity)}</Text>
