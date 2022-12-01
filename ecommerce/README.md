@@ -1,7 +1,5 @@
 # FL!P ![License Badge](https://badgen.net/badge/License/MIT/purple)
 
-<img src="/public/logo/logo-02.png" width="100px" height="auto" />
-
 ## How to install this project.
 
 You'll need [NodeJS](https://nodejs.org/) and [Git](https://git-scm.com/).
