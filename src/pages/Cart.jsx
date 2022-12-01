@@ -118,6 +118,11 @@ export const Cart = () => {
         return setInvalidConfirmedEmail(false)
     }, [email])
 
+    useEffect(()=> {
+        const quantity = cart.reduce((total, product) => total + product.quantity, 0)
+        document.title = `FL!P | Cart ${quantity === 0 ? "" : `(${quantity})`}`
+    }, [cart])
+
     return (
         <>
             <Wrapper>

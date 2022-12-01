@@ -34,6 +34,10 @@ export const Home = () => {
         })()
     }, [])
 
+    useEffect(()=> {
+        document.title = "FL!P | Home"
+    }, [])
+
     if(isLoading){
         return <Spinner/>
     }

@@ -20,18 +20,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app)
 
-// export const fetchSkateboards = async () => {
-//     try{
-//         const response = await fetch("api/skateboards.json")
-//         const data = await response.json()
-//         console.log(data.length)
-       
-//         return data.forEach(product => addDoc(collection(db, "skateboards"), {...product}))
-//     }catch(error){
-//         console.log(error)
-//     }
-// }
-
 export const checkProductStock = async (cart) => {
   const products = []
   const errors = []

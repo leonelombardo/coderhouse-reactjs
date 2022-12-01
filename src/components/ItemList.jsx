@@ -1,9 +1,19 @@
 import { Grid, Text } from '@chakra-ui/react'
+import { useEffect } from "react"
+import { useLocation } from 'react-router-dom'
 
 import { ItemCard } from './ItemCard'
 import { Title } from "./Title"
 
 export const ItemList = ({category, products}) => {
+    const { pathname } = useLocation()
+    const categoryFormatted = category.charAt(0).toUpperCase().concat(category.slice(1).toLowerCase())
+
+    useEffect(()=> {
+        if(pathname === "/") return
+        document.title = `FL!P | ${categoryFormatted}`
+    }, [])
+
     return (
         <>
             <Title>{category.toUpperCase()}</Title>

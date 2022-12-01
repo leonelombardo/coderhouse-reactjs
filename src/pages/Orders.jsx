@@ -14,6 +14,8 @@ export const Orders = () => {
     const [orders, setOrders] = useState([])
     
     useEffect(()=> {
+        document.title = "FL!P | Orders"
+
         if(!orders.length){
             (async()=> {
                 setIsLoading(true)
