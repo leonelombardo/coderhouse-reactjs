@@ -1,6 +1,6 @@
 # FL!P ![License Badge](https://badgen.net/badge/License/MIT/purple)
 
-<img src="/logo/logo-02.png" width="100px" height="auto" />
+<img src="/public/logo/logo-02.png" width="100px" height="auto" />
 
 ## How to install this project.
 
