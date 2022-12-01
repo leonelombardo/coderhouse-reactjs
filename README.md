@@ -4,7 +4,7 @@
 
 You'll need [NodeJS](https://nodejs.org/) and [Git](https://git-scm.com/).
 
-Open your preferred terminal and run `git clone https://github.com/leonelombardo/coderhouse-reactjs` then change your directory position by running `cd ecommerce`.
+Open your preferred terminal and run `git clone https://github.com/leonelombardo/flip` then change your directory position by running `cd flip`.
 
 ## How to run this project.
 
