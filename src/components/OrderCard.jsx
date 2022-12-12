@@ -56,7 +56,7 @@ export const OrderCard = ({name, email, phone, products, date, id}) => {
                 </Button>
                 {
                     showProducts &&
-                        <Flex flexDirection="column" gap={4} position="absolute" top="95%" left="0%" backgroundColor="#f9f9f9" padding={8} zIndex={999} boxShadow="0px 6px 0px #00000015" borderRadius="0 0 12px 12px">
+                        <Flex flexDirection="column" gap={4} position="absolute" top="95%" left="0%" backgroundColor="#f9f9f9" padding={8} zIndex={999} boxShadow="0px 6px 0px #00000015" borderRadius="0 0 12px 12px" minWidth="100%">
                             {
                                 products.map(product => (
                                     <AnimatePresence mode="wait" key={product.id}>
