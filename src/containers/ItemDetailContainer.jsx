@@ -49,7 +49,7 @@ export const ItemDetailContainer = () => {
     
     const removeProduct = () => {
         if(productQuantity <= product.stock){
-            setProductQuantity(previous => previous - 1)
+            setProductQuantity(previous => previous <= 0 ? 0 : previous - 1)
             setIsOutOfStock(false)
         }else{
             return
