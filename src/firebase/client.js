@@ -8,7 +8,7 @@ import { notifyError, notifySuccess } from "../services/notifications";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCG9k5GGtsogVaculpexWlUJB4TBvRBkb8",
+  apiKey: import.meta.env.FIREBASE_API_KEY,
   authDomain: "flip-reactjs-3918d.firebaseapp.com",
   projectId: "flip-reactjs-3918d",
   storageBucket: "flip-reactjs-3918d.appspot.com",
